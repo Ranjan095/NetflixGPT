@@ -2,6 +2,11 @@ import React, { useRef, useState } from "react";
 import Header from "../header/Header";
 import backgroundLoginImg from "../../utils/images/backgroundLoginImg.jpg";
 import { validation } from "../../utils/validation/validation";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../../utils/firebase/firebase";
 
 const Login = () => {
   let [isSignInForm, setIsSignInForm] = useState(true);
@@ -22,7 +27,36 @@ const Login = () => {
     let validationMessage = validation(emailValue, passwordValue);
     setValidationErrorMessage(validationMessage);
 
-    console.log(emailValue, passwordValue);
+    // console.log(emailValue, passwordValue);
+    if (validationErrorMessage) return;
+
+    if (!isSignInForm) {
+      //signUp
+
+      createUserWithEmailAndPassword(auth, emailValue, passwordValue)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log("=====>", user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setValidationErrorMessage(`${errorCode} - ${errorMessage}`);
+        });
+    } else {
+      // signIn
+      signInWithEmailAndPassword(auth, emailValue, passwordValue)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setValidationErrorMessage(`${errorCode} - ${errorMessage}`);
+        });
+    }
   };
 
   let handleSubmit = (e) => {
