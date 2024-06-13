@@ -52,11 +52,11 @@ const Login = () => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
               dispatch(addUser({ uid, email, displayName, photoURL }));
 
-              navigate("/");
+              // navigate("/");
             })
             .catch((error) => {
               // An error occurred
-              // ...
+              // ...x`
             });
 
           // console.log("=====>", user);
@@ -73,7 +73,7 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           // console.log(user);
-          navigate("/");
+          // navigate("/");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -88,7 +88,6 @@ const Login = () => {
   };
   return (
     <div>
-      <Header />
       <div className="absolute ">
         <img src={backgroundLoginImg} alt="backgroundImage" />
       </div>

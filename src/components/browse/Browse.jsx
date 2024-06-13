@@ -4,7 +4,7 @@ import Header from '../header/Header'
 const Browse = () => {
   return (
     <div>
-      <Header/>
+      Browser
     </div>
   )
 }
